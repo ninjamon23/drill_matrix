@@ -20,29 +20,46 @@ class DrillMatrixConfig extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.transparent,
         ),
-        body: ListView.builder(
-            itemCount: 15,
-            itemBuilder: (BuildContext context, int index) {
-              return ExpansionTile(
-                  title: Text('Drill type #${index + 1}'),
-                  children: <Widget>[
-                    ListTile(
-                        title: Text(
-                            'TODO: Form components for drill type #${index + 1}')),
-                  ]);
-            }),
+        body: const DrillMatrixConfigContent(),
         persistentFooterButtons: [
           ElevatedButton.icon(
             onPressed: () {},
             icon: const Icon(
-              // <-- Icon
               Icons.add,
               size: 24.0,
             ),
-            label: const Text('New Drill Type'), // <-- Text
+            label: const Text('New Drill Type'),
           ),
         ],
       ),
+    );
+  }
+}
+
+class DrillMatrixConfigContent extends StatelessWidget {
+  const DrillMatrixConfigContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    context.read<DrillTypeConfig>().getDrillTypes();
+
+    return Consumer<DrillTypeConfig>(
+      builder: (context, drillTypeConfig, child) {
+        return ListView(
+          children: drillTypeConfig.drillTypes
+              .map((e) => Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: ExpansionTile(
+                    title: Text(e.name),
+                    children: [
+                      ListTile(
+                        title: Text(e.name),
+                      )
+                    ],
+                  )))
+              .toList(),
+        );
+      },
     );
   }
 }

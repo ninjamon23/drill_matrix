@@ -1,8 +1,5 @@
 import 'package:drill_matrix/drill_matrix_config.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'bloc/drill_types.dart';
 
 void main() {
   runApp(const MyApp());
